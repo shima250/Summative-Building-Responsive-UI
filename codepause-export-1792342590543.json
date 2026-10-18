@@ -1,20 +1,20 @@
 {
   "today": {
     "date": "2026-10-18",
-    "totalEvents": 8,
-    "totalAISuggestions": 3,
-    "totalAILines": 1856,
-    "totalManualLines": 2931,
-    "aiPercentage": 38.77167328180489,
+    "totalEvents": 6,
+    "totalAISuggestions": 2,
+    "totalAILines": 365,
+    "totalManualLines": 2857,
+    "aiPercentage": 11.32836747361887,
     "averageReviewTime": 0,
     "sessionCount": 0,
     "toolBreakdown": {
       "copilot": {
         "tool": "copilot",
-        "suggestionCount": 1,
+        "suggestionCount": 2,
         "acceptedCount": 0,
         "rejectedCount": 0,
-        "linesGenerated": 161,
+        "linesGenerated": 365,
         "averageReviewTime": 0
       },
       "cursor": {
@@ -27,18 +27,18 @@
       },
       "claude-code": {
         "tool": "claude-code",
-        "suggestionCount": 2,
+        "suggestionCount": 0,
         "acceptedCount": 0,
         "rejectedCount": 0,
-        "linesGenerated": 1695,
+        "linesGenerated": 0,
         "averageReviewTime": 0
       }
     },
     "reviewQualityScore": 100,
     "unreviewedLines": 0,
     "unreviewedPercentage": 0,
-    "averageFileReviewTime": 1041847,
-    "reviewedFilesCount": 3
+    "averageFileReviewTime": 73000,
+    "reviewedFilesCount": 2
   },
   "yesterday": null,
   "last7Days": [
@@ -110,20 +110,20 @@
     },
     {
       "date": "2026-10-18",
-      "totalEvents": 8,
-      "totalAISuggestions": 3,
-      "totalAILines": 1856,
-      "totalManualLines": 2931,
-      "aiPercentage": 38.77167328180489,
+      "totalEvents": 6,
+      "totalAISuggestions": 2,
+      "totalAILines": 365,
+      "totalManualLines": 2857,
+      "aiPercentage": 11.32836747361887,
       "averageReviewTime": 0,
       "sessionCount": 0,
       "toolBreakdown": {
         "copilot": {
           "tool": "copilot",
-          "suggestionCount": 1,
+          "suggestionCount": 2,
           "acceptedCount": 0,
           "rejectedCount": 0,
-          "linesGenerated": 161,
+          "linesGenerated": 365,
           "averageReviewTime": 0
         },
         "cursor": {
@@ -136,10 +136,10 @@
         },
         "claude-code": {
           "tool": "claude-code",
-          "suggestionCount": 2,
+          "suggestionCount": 0,
           "acceptedCount": 0,
           "rejectedCount": 0,
-          "linesGenerated": 1695,
+          "linesGenerated": 0,
           "averageReviewTime": 0
         }
       },
@@ -147,21 +147,21 @@
       "unreviewedLines": 0,
       "unreviewedPercentage": 0,
       "agentSessionCount": 0,
-      "averageFileReviewTime": 1041847,
-      "reviewedFilesCount": 3
+      "averageFileReviewTime": 73000,
+      "reviewedFilesCount": 2
     }
   ],
   "trends": {
-    "aiPercentage": "increasing",
+    "aiPercentage": "stable",
     "reviewTime": "stable"
   },
   "toolBreakdown": [
     {
       "tool": "copilot",
-      "suggestionCount": 1,
+      "suggestionCount": 2,
       "acceptedCount": 0,
       "rejectedCount": 0,
-      "linesGenerated": 161,
+      "linesGenerated": 365,
       "averageReviewTime": 0
     },
     {
@@ -174,28 +174,28 @@
     },
     {
       "tool": "claude-code",
-      "suggestionCount": 2,
+      "suggestionCount": 0,
       "acceptedCount": 0,
       "rejectedCount": 0,
-      "linesGenerated": 1695,
+      "linesGenerated": 0,
       "averageReviewTime": 0
     }
   ],
   "codingModes": {
     "agent": {
-      "lines": 1695,
-      "events": 2,
-      "reviewedFiles": 3,
-      "totalFiles": 3,
+      "lines": 0,
+      "events": 0,
+      "reviewedFiles": 2,
+      "totalFiles": 2,
       "avgReviewScore": 100,
-      "percentage": 91
+      "percentage": 0
     },
     "inline": {
-      "lines": 161,
-      "events": 1,
+      "lines": 365,
+      "events": 2,
       "acceptances": 0,
       "quickAcceptances": 0,
-      "percentage": 9
+      "percentage": 100
     },
     "chatPaste": {
       "lines": 0,
@@ -203,7 +203,7 @@
       "avgReviewScore": 0,
       "percentage": 0
     },
-    "totalLines": 1856
+    "totalLines": 365
   },
   "threshold": {
     "level": "mid",
@@ -240,10 +240,10 @@
   },
   "coreMetrics": {
     "authorship": {
-      "aiPercentage": 38.77167328180489,
-      "manualPercentage": 61.22832671819511,
-      "aiLines": 1856,
-      "manualLines": 2931,
+      "aiPercentage": 11.32836747361887,
+      "manualPercentage": 88.67163252638113,
+      "aiLines": 365,
+      "manualLines": 2857,
       "status": "good",
       "target": 60
     },
