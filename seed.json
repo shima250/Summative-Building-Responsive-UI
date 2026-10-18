@@ -1,0 +1,74 @@
+{
+  "version": 2,
+  "sample": false,
+  "transactions": [
+    {
+      "id": "rec_0001",
+      "type": "expense",
+      "description": "Lunch at cafeteria",
+      "amount": 12.5,
+      "categoryId": "food",
+      "date": "2025-09-29",
+      "method": "cash",
+      "origAmount": null,
+      "origCurrency": "RWF",
+      "createdAt": 1759104000000,
+      "updatedAt": 1759104000000
+    }
+  ],
+  "categories": [
+    {
+      "id": "food",
+      "name": "Food",
+      "type": "expense"
+    },
+    {
+      "id": "books",
+      "name": "Books",
+      "type": "expense"
+    },
+    {
+      "id": "transport",
+      "name": "Transport",
+      "type": "expense"
+    },
+    {
+      "id": "entertainment",
+      "name": "Entertainment",
+      "type": "expense"
+    },
+    {
+      "id": "fees",
+      "name": "Fees",
+      "type": "expense"
+    },
+    {
+      "id": "other",
+      "name": "Other",
+      "type": "expense"
+    },
+    {
+      "id": "other-income",
+      "name": "Other income",
+      "type": "income"
+    }
+  ],
+  "budget": {
+    "monthly": 200000,
+    "categories": {}
+  },
+  "settings": {
+    "currency": "RWF",
+    "theme": "system",
+    "rates": {
+      "USD": 1450,
+      "EUR": 1690,
+      "GBP": 1950,
+      "KES": 11.2,
+      "UGX": 0.39,
+      "TZS": 0.56
+    },
+    "ratesUpdated": null
+  },
+  "savedAt": null
+}

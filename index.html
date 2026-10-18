@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Tracky — Student Finance Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<div class="app">
+
+  <!-- Sidebar (desktop) -->
+  <aside class="sidebar">
+    <header class="brand">Tracky</header>
+
+    <button type="button" class="btn btn-primary btn-wide" data-action="add">
+      <svg width="16" height="16" viewBox="0 0 24 24" class="icon" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+      <span class="grow">Add transaction</span>
+      <kbd>N</kbd>
+    </button>
+
+    <nav class="side-nav" aria-label="Main"><button type="button" class="nav-link" data-page="about">About</button>
+      <button type="button" class="nav-link" data-page="overview">
+        <svg width="16" height="16" viewBox="0 0 24 24" class="icon" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+        Overview
+      </button>
+      <button type="button" class="nav-link" data-page="transactions">
+        <svg width="16" height="16" viewBox="0 0 24 24" class="icon" aria-hidden="true"><path d="M8 3 4 7l4 4"/><path d="M4 7h16"/><path d="m16 21 4-4-4-4"/><path d="M20 17H4"/></svg>
+        Transactions
+      </button>
+      <button type="button" class="nav-link" data-page="budget">
+        <svg width="16" height="16" viewBox="0 0 24 24" class="icon" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+        Budget
+      </button>
+      <button type="button" class="nav-link" data-page="settings">
+        <svg width="16" height="16" viewBox="0 0 24 24" class="icon" aria-hidden="true"><path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg>
+        Settings
+      </button>
+    </nav>
+
+    <div class="grow"></div>
+
+    <div class="storage-card">
+      <div class="storage-title">
+        <svg width="14" height="14" viewBox="0 0 24 24" class="icon" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Saved on this device
+      </div>
+      <div class="storage-note" id="storage-note">Only in this browser. No account, nothing uploaded.</div>
+    </div>
+  </aside>
+
+  <main class="main" id="main-content" tabindex="-1">
+    <div class="container">
+
+      <div class="banner banner-warning" id="storage-banner" role="alert" hidden>
+        <strong>Storage is blocked in this browser.</strong>
+        <span>Changes work for this session only and will be lost when you close the tab. Export a backup in Settings to keep them.</span>
+      </div>
+
+      <div class="cap-status"><p id="cap-polite" role="status" aria-live="polite"></p><p id="cap-assertive" role="alert" aria-live="assertive"></p></div>
+      <!-- ============ OVERVIEW ============ -->
+      <div class="page page-overview" id="page-overview" hidden>
+        <header class="page-head">
+          <div>
+            <h1>Overview</h1>
+            <p class="page-sub" id="ov-sub"></p>
+          </div>
+        </header>
+
+        <div class="banner banner-info" id="sample-banner" hidden>
+          <span class="banner-text">You're looking at <strong>sample data</strong> so you can explore Tracky. Clear it when you're ready to track your own money.</span>
+          <div class="row-8">
+            <button type="button" class="btn btn-secondary btn-sm" data-action="keep-sample">Keep it</button>
+            <button type="button" class="btn btn-primary btn-sm" data-action="clear-sample">Clear sample data</button>
+          </div>
+        </div>
+
+        <section class="card empty-card" id="ov-empty" hidden>
+          <h2 class="empty-title">Start with one transaction</h2>
+          <p class="empty-text">Record what you spent today — lunch, a moto ride, airtime. Your balance, spending trend and budget fill in here as you go.</p>
+          <div class="row-8 wrap mt-4">
+            <button type="button" class="btn btn-primary" data-action="add">Add transaction</button>
+            <button type="button" class="btn btn-secondary" data-action="load-sample">Explore with sample data</button>
+          </div>
+        </section>
+
+        <section class="card rubric-stats" aria-label="Statistics">
+          <dl class="data-stats"><div><dt>Total records</dt><dd id="metric-count"></dd></div><div><dt>Sum of all amounts</dt><dd id="metric-total"></dd></div><div><dt>Top expense category</dt><dd id="metric-top"></dd></div></dl>
+          <h2>Spending in the last 7 days</h2><div id="week-chart" class="week-chart"></div>
+          
+        </section>
+        <div class="stack-16" id="ov-content" hidden>
+          <div class="grid-stats">
+            <section class="card stat stat-dark">
+              <h2 class="stat-label">Balance</h2>
+              <div class="stat-value" id="ov-balance"></div>
+              <div class="stat-sub">All income minus all expenses</div>
+            </section>
+            <section class="card stat">
+              <h2 class="stat-label">Income in <span class="month-short"></span></h2>
+              <div class="stat-value income" id="ov-income"></div>
+              <div class="stat-sub" id="ov-income-sub"></div>
+            </section>
+            <section class="card stat">
+              <h2 class="stat-label">Spent in <span class="month-short"></span></h2>
+              <div class="stat-value" id="ov-expenses"></div>
+              <div class="stat-sub" id="ov-exp-delta"></div>
+            </section>
+          </div>
+
+          <div class="grid-2">
+            <section class="card">
+              <div class="card-head">
+                <h2 class="card-title"><span class="month-short"></span> budget</h2>
+                <button type="button" class="btn btn-ghost btn-sm" data-page="budget">Details</button>
+              </div>
+              <div id="ov-budget"></div>
+            </section>
+          </div>
+
+          <div class="grid-2 align-start">
+            <section class="card gap-14">
+              <div class="stack-2">
+                <h2 class="card-title">Where it went</h2>
+                <span class="small-muted">Spending by category, <span id="ov-month-name"></span></span>
+              </div>
+              <div id="ov-cats"></div>
+            </section>
+
+            <section class="card card-list">
+              <div class="card-head px-8">
+                <h2 class="card-title">Recent transactions</h2>
+                <button type="button" class="btn btn-ghost btn-sm" data-page="transactions">View all</button>
+              </div>
+              <div class="stack" id="ov-recent"></div>
+            </section>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ TRANSACTIONS ============ -->
+      <div class="page" id="page-transactions" hidden>
+        <header class="page-head">
+          <div>
+            <h1>Transactions</h1>
+            <p class="page-sub" id="tx-total"></p>
+          </div>
+        </header>
+
+        <section class="card empty-card" id="tx-empty" hidden>
+          <h2 class="empty-title">No transactions yet</h2>
+          <p class="empty-text">Everything you record shows up here — searchable by description, category or amount.</p>
+          <div class="row-8 wrap">
+            <button type="button" class="btn btn-primary" data-action="add">Add transaction</button>
+            <button type="button" class="btn btn-secondary" data-page="settings">Import a backup</button>
+          </div>
+        </section>
+
+        <div class="stack-12" id="tx-content" hidden>
+          <div class="toolbar">
+            <label class="search">
+              <span class="sr-only">Search transactions</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+              <input aria-describedby="search-help search-error" type="search" id="search" class="input" placeholder="Regex pattern: coffee|tea">
+            </label>
+            <div class="seg" role="group" aria-label="Type" id="type-filter">
+              <button type="button" data-type="All">All</button>
+              <button type="button" data-type="Expenses">Expenses</button>
+              <button type="button" data-type="Income">Income</button>
+            </div>
+          </div>
+
+          <p id="search-help">Search with a regular expression, e.g. coffee|tea or \b(\w+)\s+\1\b. Amounts are searchable with two decimals.</p>
+          <label><input type="checkbox" id="search-case" checked> Case-insensitive search</label><p id="search-error" role="status" class="error-text"></p>
+          <div class="toolbar">
+            <select id="f-cat" class="select filter" aria-label="Category"></select>
+            <select id="f-month" class="select filter" aria-label="Month"></select>
+            <select id="f-method" class="select filter" aria-label="Payment method">
+              <option value="all">All methods</option>
+              <option value="momo">Mobile money</option>
+              <option value="cash">Cash</option>
+              <option value="card">Card</option>
+              <option value="bank">Bank transfer</option>
+            </select>
+            <select id="f-sort" class="select filter" aria-label="Sort">
+              <option value="az">Description A–Z</option><option value="za">Description Z–A</option><option value="newest">Newest first</option>
+              <option value="oldest">Oldest first</option>
+              <option value="high">Largest amount</option>
+              <option value="low">Smallest amount</option>
+            </select>
+            <button type="button" class="btn btn-ghost btn-md" id="clear-filters" data-action="clear-filters" hidden>Clear filters</button>
+          </div>
+
+          <div class="tx-summary" aria-live="polite">
+            <span id="tx-count"></span>
+            <span>In <span class="income strong" id="tx-in"></span></span>
+            <span>Out <span class="strong" id="tx-out"></span></span>
+          </div>
+
+          <section class="card empty-card small" id="tx-nomatch" hidden>
+            <h2 class="card-title-lg">Nothing matches these filters</h2>
+            <p class="muted-13">Try a different search term, or widen the month or category.</p>
+            <button type="button" class="btn btn-secondary btn-md" data-action="clear-filters">Clear filters</button>
+          </section>
+
+          <div class="stack-16" id="tx-groups"></div>
+
+          <div class="center" id="tx-more-wrap" hidden>
+            <button type="button" class="btn btn-secondary" id="tx-more" data-action="show-more"></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ BUDGET ============ -->
+      <div class="page" id="page-budget" hidden>
+        <header class="page-head">
+          <div>
+            <h1>Budget</h1>
+            <p class="page-sub">One monthly limit, plus optional limits per category. Limits repeat every month.</p>
+          </div>
+          <div class="month-switch">
+            <button type="button" class="round-btn" data-action="prev-month" aria-label="Previous month">
+              <svg width="16" height="16" viewBox="0 0 24 24" class="icon" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+            </button>
+            <span class="month-label" id="bp-month" aria-live="polite"></span>
+            <button type="button" class="round-btn" data-action="next-month" id="bp-next" aria-label="Next month">
+              <svg width="16" height="16" viewBox="0 0 24 24" class="icon" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+          </div>
+        </header>
+
+        <div class="grid-2 align-start">
+          <section class="card">
+            <div id="bp-summary"></div>
+            <form id="budget-form" class="budget-form" novalidate>
+              <label for="budget-input" class="label">Monthly limit (RWF)</label>
+              <div class="row-8 wrap">
+                <input id="budget-input" class="input budget-input" inputmode="numeric" autocomplete="off" placeholder="e.g. 200000" aria-describedby="budget-err">
+                <button type="submit" class="btn btn-primary" id="budget-save">Set limit</button>
+                <button type="button" class="btn btn-ghost" id="budget-remove" data-action="remove-budget" hidden>Remove</button>
+              </div>
+              <span id="budget-err" class="error-text min-h" role="alert"></span>
+            </form>
+          </section>
+
+          <section class="card gap-12">
+            <h2 class="card-title">Insights</h2>
+            <div id="bp-insights"></div>
+          </section>
+        </div>
+
+        <section class="card budget-cats">
+          <div class="stack-2 mb-8">
+            <h2 class="card-title">Categories</h2>
+            <span class="small-muted" id="bp-cats-sub"></span>
+          </div>
+          <div id="bp-cats"></div>
+        </section>
+      </div>
+
+      <!-- ============ SETTINGS ============ -->
+      <div class="page page-settings" id="page-settings" hidden>
+        <header class="stack-2">
+          <h1>Settings</h1>
+          <p class="page-sub">Changes save automatically.</p>
+        </header>
+
+        <section class="card gap-14">
+          <div class="stack-2">
+            <h2 class="card-title-lg">Currency</h2>
+            <p class="muted-13">Every amount is stored in Rwandan francs. Pick another display currency to see totals converted with the rates below.</p>
+          </div>
+          <div class="field">
+            <label for="display-cur" class="label">Display currency</label>
+            <select id="display-cur" class="select currency-select">
+              <option value="RWF">RWF — Rwandan franc (primary)</option>
+              <option value="USD">USD — US dollar</option>
+              <option value="EUR">EUR — Euro</option>
+              <option value="GBP">GBP — British pound</option>
+              <option value="KES">KES — Kenyan shilling</option>
+              <option value="UGX">UGX — Ugandan shilling</option>
+              <option value="TZS">TZS — Tanzanian shilling</option>
+            </select>
+          </div>
+          <div class="divided stack-4">
+            <div class="card-head wrap">
+              <h3 class="label">Exchange rates</h3>
+              <button type="button" class="btn btn-ghost btn-sm" data-action="reset-rates">Reset to defaults</button>
+            </div>
+            <p class="small-muted mb-6">Rates are set by you, not fetched live. <span id="rates-note"></span></p>
+            <div class="rates-grid" id="rates"></div>
+          </div>
+        </section>
+
+        <section class="card gap-12">
+          <div class="card-head wrap align-top">
+            <div class="stack-2">
+              <h2 class="card-title-lg">Categories</h2>
+              <p class="muted-13">Rename by editing a name. Deleting moves its transactions to “Other”.</p>
+            </div>
+            <div class="seg" role="group" aria-label="Category type" id="cat-tabs">
+              <button type="button" data-tab="expense">Expenses</button>
+              <button type="button" data-tab="income">Income</button>
+            </div>
+          </div>
+          <ul class="cat-list" id="cat-list"></ul>
+          <form id="new-cat-form" class="stack-4" novalidate>
+            <div class="row-8 wrap">
+              <input id="new-cat" class="input new-cat-input" maxlength="32" aria-label="New category name">
+              <button type="submit" class="btn btn-secondary">Add category</button>
+            </div>
+            <span class="error-text" id="new-cat-err" role="alert"></span>
+          </form>
+        </section>
+
+        <section class="card gap-12">
+          <div class="card-head wrap">
+            <div class="stack-2">
+              <h2 class="card-title-lg">Appearance</h2>
+              <p class="muted-13">System follows your device's light or dark setting.</p>
+            </div>
+            <div class="seg" role="group" aria-label="Theme" id="theme-tabs">
+              <button type="button" data-theme-option="light">Light</button>
+              <button type="button" data-theme-option="dark">Dark</button>
+              <button type="button" data-theme-option="system">System</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="card gap-14">
+          <div class="stack-2">
+            <h2 class="card-title-lg">Your data</h2>
+            <p class="muted-13">Tracky has no account and no server. Everything is saved in this browser's local storage on this device only — it won't sync to your phone or other browsers, and clearing your browser data deletes it. Export a backup now and then.</p>
+          </div>
+          <dl class="data-stats">
+            <div><dt>Transactions</dt><dd id="stat-count"></dd></div>
+            <div><dt>Space used</dt><dd id="stat-size"></dd></div>
+            <div><dt>Last saved</dt><dd id="stat-saved"></dd></div>
+          </dl>
+          <div class="row-8 wrap">
+            <button type="button" class="btn btn-secondary" data-action="export-json">Export backup (.json)</button>
+            <button type="button" class="btn btn-secondary" data-action="export-csv">Export spreadsheet (.csv)</button>
+            <button type="button" class="btn btn-secondary" data-action="import">Import backup</button>
+          </div>
+          <div class="divided card-head wrap">
+            <div class="stack-2 reset-text">
+              <h3 class="label" id="reset-title"></h3>
+              <p class="small-muted" id="reset-desc"></p>
+            </div>
+            <button type="button" class="btn btn-danger" id="erase-btn" data-action="erase">Erase all data</button>
+            <button type="button" class="btn btn-secondary btn-md" id="sample-btn" data-action="load-sample">Load sample data</button>
+          </div>
+        </section>
+      </div>
+
+      <section class="page" id="page-about" hidden><header class="page-head"><h1>About Tracky</h1></header><section class="card"><h2>Student Finance Tracker</h2><p>Tracky helps students record income and spending, plan budgets, and explore their finances. It is built with accessible vanilla HTML, CSS, and JavaScript.</p><h2>Contact</h2><p>Email: <a href="mailto:e.shima@alustudent.com">e.shima@alustudent.com</a>. GitHub profile: pending author URL.</p></section></section>
+      <footer class="small-muted"><p>Tracky · Student Finance Tracker · <button class="btn btn-ghost" type="button" data-page="about">About &amp; contact</button></p></footer>
+      <div class="bottom-spacer"></div>
+    </div>
+  </main>
+
+  <!-- Bottom nav (mobile) -->
+  <nav class="bottom-nav" aria-label="Main">
+    <button type="button" class="bn-item" data-page="overview">
+      <svg width="20" height="20" viewBox="0 0 24 24" class="icon" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+      Overview
+    </button>
+    <button type="button" class="bn-item" data-page="transactions">
+      <svg width="20" height="20" viewBox="0 0 24 24" class="icon" aria-hidden="true"><path d="M8 3 4 7l4 4"/><path d="M4 7h16"/><path d="m16 21 4-4-4-4"/><path d="M20 17H4"/></svg>
+      History
+    </button>
+    <div class="center">
+      <button type="button" class="fab" data-action="add" aria-label="Add transaction">
+        <svg width="22" height="22" viewBox="0 0 24 24" class="icon" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+      </button>
+    </div>
+    <button type="button" class="bn-item" data-page="budget">
+      <svg width="20" height="20" viewBox="0 0 24 24" class="icon" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+      Budget
+    </button>
+    <button type="button" class="bn-item" data-page="settings">
+      <svg width="20" height="20" viewBox="0 0 24 24" class="icon" aria-hidden="true"><path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg>
+      Settings
+    </button>
+  </nav>
+
+  <!-- Add / edit transaction -->
+  <div class="overlay" id="form-overlay" hidden>
+    <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="form-title">
+      <div class="dialog-head">
+        <h2 id="form-title">New transaction</h2>
+        <button type="button" class="close-btn" data-action="close-form" aria-label="Close">
+          <svg width="16" height="16" viewBox="0 0 24 24" class="icon" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+
+      <form id="tx-form" class="tx-form" novalidate>
+        <div class="form-body">
+          <div class="seg" role="group" aria-label="Transaction type" id="form-type">
+            <button type="button" data-form-type="expense">Expense</button>
+            <button type="button" data-form-type="income">Income</button>
+          </div>
+
+          <div class="field">
+            <label for="tx-amount" class="label">Amount</label>
+            <div class="row-8">
+              <input id="tx-amount" class="input amount-input" inputmode="decimal" autocomplete="off" placeholder="0" aria-describedby="tx-amount-msg">
+              <select id="tx-currency" class="select currency-pick" aria-label="Currency entered">
+                <option>RWF</option><option>USD</option><option>EUR</option><option>GBP</option>
+                <option>KES</option><option>UGX</option><option>TZS</option>
+              </select>
+            </div>
+            <span id="tx-amount-msg" class="help-text" role="alert"></span>
+          </div>
+
+          <div class="field">
+            <div class="card-head">
+              <label for="tx-desc" class="label">Description</label>
+              <span class="small-muted tabular" id="desc-count">0/60</span>
+            </div>
+            <input id="tx-desc" class="input" autocomplete="off" maxlength="60" aria-describedby="tx-desc-err">
+            <span id="tx-desc-err" class="error-text" role="alert"></span>
+          </div>
+
+          <fieldset class="field-set">
+            <legend class="label">Category</legend>
+            <div class="chips" id="form-chips"></div>
+            <span id="tx-cat-err" class="error-text" role="alert"></span>
+          </fieldset>
+
+          <div class="two-col">
+            <div class="field">
+              <label for="tx-date" class="label">Date</label>
+              <input id="tx-date" type="date" class="input" aria-describedby="tx-date-err">
+              <span id="tx-date-err" class="error-text" role="alert"></span>
+            </div>
+            <div class="field">
+              <label for="tx-method" class="label">Paid with</label>
+              <select id="tx-method" class="select">
+                <option value="momo">Mobile money</option>
+                <option value="cash">Cash</option>
+                <option value="card">Card</option>
+                <option value="bank">Bank transfer</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-foot">
+          <button type="button" class="btn btn-danger" id="form-delete" data-action="delete-from-form">Delete</button>
+          <div class="grow"></div>
+          <button type="button" class="btn btn-ghost" id="form-another" data-action="save-another">Save &amp; add another</button>
+          <button type="submit" class="btn btn-primary" id="form-save">Add expense</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Confirm dialog -->
+  <div class="overlay" id="confirm-overlay" hidden>
+    <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="cf-title">
+      <div class="dialog-head">
+        <div class="stack-6">
+          <h2 id="cf-title"></h2>
+          <p class="cf-desc" id="cf-desc"></p>
+        </div>
+        <button type="button" class="close-btn" data-action="close-confirm" aria-label="Close">
+          <svg width="16" height="16" viewBox="0 0 24 24" class="icon" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+      <div class="cf-actions">
+        <button type="button" class="btn btn-ghost" data-action="close-confirm">Cancel</button>
+        <button type="button" class="btn" id="cf-ok" data-action="run-confirm">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <input type="file" id="file-input" accept="application/json,.json" hidden>
+
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
