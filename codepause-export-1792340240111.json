@@ -1,11 +1,11 @@
 {
   "today": {
     "date": "2026-10-18",
-    "totalEvents": 6,
-    "totalAISuggestions": 1,
-    "totalAILines": 161,
+    "totalEvents": 8,
+    "totalAISuggestions": 3,
+    "totalAILines": 1856,
     "totalManualLines": 2931,
-    "aiPercentage": 5.206985769728331,
+    "aiPercentage": 38.77167328180489,
     "averageReviewTime": 0,
     "sessionCount": 0,
     "toolBreakdown": {
@@ -27,18 +27,18 @@
       },
       "claude-code": {
         "tool": "claude-code",
-        "suggestionCount": 0,
+        "suggestionCount": 2,
         "acceptedCount": 0,
         "rejectedCount": 0,
-        "linesGenerated": 0,
+        "linesGenerated": 1695,
         "averageReviewTime": 0
       }
     },
     "reviewQualityScore": 100,
     "unreviewedLines": 0,
     "unreviewedPercentage": 0,
-    "averageFileReviewTime": 64400,
-    "reviewedFilesCount": 1
+    "averageFileReviewTime": 1041847,
+    "reviewedFilesCount": 3
   },
   "yesterday": null,
   "last7Days": [
@@ -110,11 +110,11 @@
     },
     {
       "date": "2026-10-18",
-      "totalEvents": 6,
-      "totalAISuggestions": 1,
-      "totalAILines": 161,
+      "totalEvents": 8,
+      "totalAISuggestions": 3,
+      "totalAILines": 1856,
       "totalManualLines": 2931,
-      "aiPercentage": 5.206985769728331,
+      "aiPercentage": 38.77167328180489,
       "averageReviewTime": 0,
       "sessionCount": 0,
       "toolBreakdown": {
@@ -136,10 +136,10 @@
         },
         "claude-code": {
           "tool": "claude-code",
-          "suggestionCount": 0,
+          "suggestionCount": 2,
           "acceptedCount": 0,
           "rejectedCount": 0,
-          "linesGenerated": 0,
+          "linesGenerated": 1695,
           "averageReviewTime": 0
         }
       },
@@ -147,12 +147,12 @@
       "unreviewedLines": 0,
       "unreviewedPercentage": 0,
       "agentSessionCount": 0,
-      "averageFileReviewTime": 64400,
-      "reviewedFilesCount": 1
+      "averageFileReviewTime": 1041847,
+      "reviewedFilesCount": 3
     }
   ],
   "trends": {
-    "aiPercentage": "stable",
+    "aiPercentage": "increasing",
     "reviewTime": "stable"
   },
   "toolBreakdown": [
@@ -174,28 +174,28 @@
     },
     {
       "tool": "claude-code",
-      "suggestionCount": 0,
+      "suggestionCount": 2,
       "acceptedCount": 0,
       "rejectedCount": 0,
-      "linesGenerated": 0,
+      "linesGenerated": 1695,
       "averageReviewTime": 0
     }
   ],
   "codingModes": {
     "agent": {
-      "lines": 0,
-      "events": 0,
-      "reviewedFiles": 1,
-      "totalFiles": 1,
+      "lines": 1695,
+      "events": 2,
+      "reviewedFiles": 3,
+      "totalFiles": 3,
       "avgReviewScore": 100,
-      "percentage": 0
+      "percentage": 91
     },
     "inline": {
       "lines": 161,
       "events": 1,
       "acceptances": 0,
       "quickAcceptances": 0,
-      "percentage": 100
+      "percentage": 9
     },
     "chatPaste": {
       "lines": 0,
@@ -203,7 +203,7 @@
       "avgReviewScore": 0,
       "percentage": 0
     },
-    "totalLines": 161
+    "totalLines": 1856
   },
   "threshold": {
     "level": "mid",
@@ -240,9 +240,9 @@
   },
   "coreMetrics": {
     "authorship": {
-      "aiPercentage": 5.206985769728331,
-      "manualPercentage": 94.79301423027167,
-      "aiLines": 161,
+      "aiPercentage": 38.77167328180489,
+      "manualPercentage": 61.22832671819511,
+      "aiLines": 1856,
       "manualLines": 2931,
       "status": "good",
       "target": 60
