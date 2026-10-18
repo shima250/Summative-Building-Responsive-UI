@@ -4,12 +4,12 @@
 
 **Contact:** [e.shima@alustudent.com](mailto:e.shima@alustudent.com)
 
-- **GitHub profile:** pending author URL.
-- **Repository URL:** pending repository creation or URL.
-- **GitHub Pages URL:** pending deployment.
-- **Demo video:** pending recording; see [demo outline](#suggested-23-minute-demo).
+- **GitHub profile:** [shima250](https://github.com/shima250).
+- **Repository URL:** [Summative-Building-Responsive-UI](https://github.com/shima250/Summative-Building-Responsive-UI).
+- **GitHub Pages URL:** [Open Tracky](https://shima250.github.io/Summative-Building-Responsive-UI/).
+- **Demo video:** 
 
-Replace the pending entries with your real links before submitting. This project has not been deployed. The assignment requires **GitHub Pages** hosting.
+Add your actual demo video link before submitting. The assignment requires **GitHub Pages** hosting.
 
 ## Run locally
 
